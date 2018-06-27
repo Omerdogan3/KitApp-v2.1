@@ -1,0 +1,11 @@
+{
+  "name": "kitapp",
+  "displayName": "KitApp",
+  "expo": {
+		"name": "movieapp",
+		"slug": "movie-app",
+		"sdkVersion": "UNVERSIONED",
+		"privacy": "public"
+	}
+}
+
