@@ -45,19 +45,20 @@ class Casts extends Component {
 
 render(){
 		const {authorBooks, getTabHeight} = this.props;
-		
-		let computedHeight = (150) * authorBooks.length; 
-
+		let computedHeight = (163) * authorBooks.length; 
+		computedHeight += 447 + 40;
 
     return (
-
-			<View style={styles.container} onLayout={getTabHeight.bind(this,'PRICE', computedHeight)}>
 			
-			{
+			<View style={styles.container} onLayout={getTabHeight.bind(this,'AUTHOR', computedHeight)}>
+			{console.log(computedHeight, authorBooks.length)}
+			{ 
 				authorBooks.map((item,index)=>(
 					<CardThree key={item.ISBN} info={item} viewMovie={this.props.viewMovie} />
 				))
 			}
+
+			
 			</View>
 
 		

@@ -30,6 +30,7 @@ class Movies extends Component {
 
 		this._viewMovie = this._viewMovie.bind(this);
 		this._onRefresh = this._onRefresh.bind(this);
+		this._goToPopularBooks = this._goToPopularBooks.bind(this);
 		this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
 	}
 
@@ -49,7 +50,7 @@ class Movies extends Component {
 		if (isRefreshed && this.setState({ isRefreshing: false }));
 	}
 
-	_viewMoviesList(type, title) {
+	_viewMoviesList(movieId, title) {
 		let rightButtons = [];
 		if (Platform.OS === 'ios') {
 			rightButtons = [
@@ -62,13 +63,20 @@ class Movies extends Component {
 		}
 		this.props.navigator.showModal({
 			title,
-			screen: 'movieapp.PopularBooks',
+			screen: 'movieapp.AuthorBooks',
 			passProps: {
-				type
+				movieId
 			},
 			navigatorButtons: {
 				rightButtons
 			}
+		});
+	}
+
+	_goToPopularBooks() {
+		this.props.navigator.showModal({
+			screen: 'movieapp.PopularBooks',
+			title: 'Populer Kitaplar'
 		});
 	}
 
@@ -155,7 +163,7 @@ class Movies extends Component {
 						<TouchableOpacity>
 							<Text
 								style={styles.listHeadingRight}
-								onPress={this._viewMoviesList.bind(this, 'popular', 'Popular')}>
+								onPress={this._goToPopularBooks}>
 								Tumunu Goruntule
 							</Text>
 						</TouchableOpacity>
@@ -171,7 +179,7 @@ class Movies extends Component {
 								{iconPlay}
 								<Text
 									style={styles.browseListItemText}
-									onPress={this._viewMoviesList.bind(this, 'now_playing', 'Test Ekrani')}>
+									onPress={this._viewMoviesList.bind(this, 9789752430297, 'Ilber Ortayli')}>
 									Kampanya
 								</Text>
 							</View>

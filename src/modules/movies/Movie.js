@@ -66,6 +66,7 @@ class Movie extends Component {
 
 	_retrieveDetails(isRefreshed) {
 		this.props.actions.retrieveBookDetails(this.props.movieId);
+		this._retrievePrices();
 		if (isRefreshed && this.setState({ isRefreshing: false }));
 	}
 
@@ -135,7 +136,6 @@ class Movie extends Component {
 		const { details,authorBooks } = this.props;
 		const info = details;
 		const authorBook = authorBooks;
-
 
 		let height;
 		if (this.state.tab === 0) height = this.state.infoTabHeight;

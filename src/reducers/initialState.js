@@ -7,6 +7,7 @@ export default {
 		popularBooks: {},
 		searchResults: {},
 		prices: {},
-		authorBooks: {}
+		authorBooks: {},
+		popularAuthors: {}
 	}
 };

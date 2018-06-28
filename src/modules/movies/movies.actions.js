@@ -42,6 +42,25 @@ export function retrievePopularBooks(page) {
 	};
 }
 
+export function retrievePopularAuthorsSuccess(res){
+	return {
+		type: types.RETRIEVE_POPULAR_AUTHORS_SUCCESS,
+		popularAuthors: res.data
+	}
+}
+
+export function retrievePopularAuthors(page) {
+	return function (dispatch) {
+		return axios.get(`https://kitappapi.herokuapp.com/popularauthors/:`)
+		.then(res => {
+			dispatch(retrievePopularAuthorsSuccess(res));
+		})
+		.catch(error => {
+			// console.log('Popular', error); //eslint-disable-line
+		});
+	};
+}
+
 // NOW PLAYING
 export function retrieveNowPlayingMoviesSuccess(res) {
 	return {

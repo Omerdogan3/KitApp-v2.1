@@ -58,6 +58,11 @@ export default function (state = initialState.movies, action) {
 				authorBooks: action.authorBooks
 			};
 
+		case types.RETRIEVE_POPULAR_AUTHORS_SUCCESS:
+			return {
+				...state,
+				popularAuthors: action.popularAuthors
+			}
 		default:
 			return state;
 	}

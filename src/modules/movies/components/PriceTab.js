@@ -10,11 +10,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 
 import { TMDB_IMG_URL } from '../../../constants/api';
-import styles from './styles/CardThree';
+import styles from './styles/PriceTab';
 
 const iconStar = <Icon name="md-star" size={16} color="#F5B642" />;
 
-class CardThree extends Component {
+class PriceTab extends Component {
 
 	constructor(props) {
 		super(props);
@@ -60,7 +60,7 @@ class CardThree extends Component {
 	}
 }
 
-CardThree.propTypes = {
+PriceTab.propTypes = {
 	info: PropTypes.object.isRequired,
 	viewMovie: PropTypes.func.isRequired
 };
@@ -71,4 +71,4 @@ function mapStateToProps(state, ownProps) {
 	};
 }
 
-export default connect(mapStateToProps, null)(CardThree);
+export default connect(mapStateToProps, null)(PriceTab);

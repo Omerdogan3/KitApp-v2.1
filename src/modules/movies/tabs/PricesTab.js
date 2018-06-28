@@ -30,7 +30,9 @@ render(){
     const {prices, getTabHeight} = this.props;
 
     return (
+      
       <View style={styles.container} onLayout={getTabHeight.bind(this,'PRICE', 700)}>
+      {console.log(700)}
         <View style={styles.overview}>
           <Text style={styles.label}>
             {prices.title}
@@ -53,23 +55,6 @@ render(){
 
         </View>
 
-
-        {/*
-					<View style={styles.container} onLayout={getTabHeight.bind(this,'PRICE', 700)}>
-
-				
-				{
-					authorBooks.map((item,index)=>(
-						<View key={index} style={styles.castContainer}>
-							<Image source={{ uri: item.image_link}} style={styles.castImage} />
-							<View style={styles.characterContainer}>
-								<Text style={styles.label}>{item.title}</Text>
-							</View>
-						</View>
-          ))
-        }
-        </View>
-			*/}
       </View>
     );
   };
