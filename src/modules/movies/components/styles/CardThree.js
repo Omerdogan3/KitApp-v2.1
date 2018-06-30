@@ -13,9 +13,8 @@ const styles = StyleSheet.create({
 		paddingRight: 16,
 		overflow: 'hidden'
 	},
-	cardDetails: {
-		paddingLeft: 10,
-		flex: 1
+	cardDetails:{
+		padding: 10
 	},
 	cardImage: {
 		height: 163,
@@ -27,7 +26,8 @@ const styles = StyleSheet.create({
 		color: 'black',
 		fontSize: 13,
 		fontWeight: '500',
-		paddingTop: 10
+		paddingTop: 10,
+		width: '80%'
 	},
 	cardGenre: {
 		flexDirection: 'row'

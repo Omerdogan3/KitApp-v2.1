@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
 	},
 	castContainer: {
 		flexDirection: 'row',
-		marginBottom: 15
+		marginBottom: 10
 	},
 	castImage: {
 		width: 80,

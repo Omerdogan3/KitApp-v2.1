@@ -23,7 +23,6 @@ import DefaultTabBar from '../_global/scrollableTabView/DefaultTabBar';
 import Info from './tabs/Info';
 import PricesTab from './tabs/PricesTab';
 import ProgressBar from '../_global/ProgressBar';
-import Trailers from './tabs/Trailers';
 import styles from './styles/Movie';
 import { TMDB_IMG_URL, YOUTUBE_API_KEY, YOUTUBE_URL } from '../../constants/api';
 
@@ -35,23 +34,23 @@ class Movie extends Component {
 			castsTabHeight: null,
 			heightAnim: null,
 			priceTabHeight: null,
+			isLoadingPrices: true,
+			isLoadingAuthor: true,
 			authorTabHeight: null,
 			infoTabHeight: null,
 			isLoading: true,
 			isRefreshing: false,
 			trailersTabHeight: null,
 			tab: 0,
+			numberOfBooks: 0 
 		};
 
 		this._getTabHeight = this._getTabHeight.bind(this);
 		this._onChangeTab = this._onChangeTab.bind(this);
-		this._onContentSizeChange = this._onContentSizeChange.bind(this);
 		this._onRefresh = this._onRefresh.bind(this);
 		this._viewMovie = this._viewMovie.bind(this);
 		this._onScroll = this._onScroll.bind(this);
 		this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
-	
-
 	}
 
 	componentWillMount() {
@@ -62,6 +61,14 @@ class Movie extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.details) this.setState({ isLoading: false });
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.prices !== prevProps.prices) { 
+      this.setState({ isLoadingPrices: false });
+    }else if(this.props.authorBooks !==prevProps.authorBooks){
+			this.setState({isLoadingAuthor: false})
+		}
 	}
 
 	_retrieveDetails(isRefreshed) {
@@ -112,10 +119,6 @@ class Movie extends Component {
 		});
 	}
 
-	// ScrollView onContentSizeChange prop
-	_onContentSizeChange(width, height) {
-		
-	}
 
 	_getTabHeight(tabName, height) {
 		if(tabName === 'PRICE') this.setState({priceTabHeight: height})
@@ -208,10 +211,10 @@ class Movie extends Component {
 									style={styles.tabBar}
 								/>
 							)}>
-													
+
 							<Info tabLabel="BILGI" info={info} />
-							<PricesTab tabLabel="FIYAT" getTabHeight={this._getTabHeight}/>
-							<Casts tabLabel="YAZAR" viewMovie={this._viewMovie} getTabHeight={this._getTabHeight}/>
+							<PricesTab tabLabel="FIYAT" isLoading={this.state.isLoadingPrices} getTabHeight={this._getTabHeight}/>
+							<Casts tabLabel={"YAZAR "+ authorBooks.length} isLoading={this.state.isLoadingAuthor} viewMovie={this._viewMovie} getTabHeight={this._getTabHeight}/>
 						</ScrollableTabView>
 					</View>
 				</View>
@@ -238,7 +241,9 @@ Movie.propTypes = {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		details: state.movies.details
+		details: state.movies.details,
+		authorBooks: state.movies.authorBooks,
+		prices: state.movies.prices
 	};
 }
 

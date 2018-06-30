@@ -9,7 +9,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import numeral from 'numeral';
 
-import styles from './styles/Info';
+import styles from './styles/Casts';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -30,9 +30,6 @@ class Casts extends Component {
 			isLoading: true,
 			isRefreshing: false
 		};
-
-
-
 	}
 
 	_onNavigatorEvent(event) {
@@ -43,25 +40,28 @@ class Casts extends Component {
 		}
 	}
 
+	_displayBooks(bookObj){
+		return bookObj.map((item,index)=>(
+			<View key={index} style={styles.castContainer}>
+				<CardThree key={item.ISBN} info={item} viewMovie={this.props.viewMovie} />
+			</View>
+		))
+	}
+	
+
+
 render(){
 		const {authorBooks, getTabHeight} = this.props;
-		let computedHeight = (163) * authorBooks.length; 
+		let computedHeight = (172) * authorBooks.length; 
 		computedHeight += 447 + 40;
+		
 
     return (
-			
 			<View style={styles.container} onLayout={getTabHeight.bind(this,'AUTHOR', computedHeight)}>
-			{console.log(computedHeight, authorBooks.length)}
-			{ 
-				authorBooks.map((item,index)=>(
-					<CardThree key={item.ISBN} info={item} viewMovie={this.props.viewMovie} />
-				))
-			}
-
-			
+				{ this.props.isLoading === true ? <Text style={{color: 'white'}}>Yukleniyor...</Text> :
+					this._displayBooks(authorBooks)
+				}
 			</View>
-
-		
     );
   };
 };

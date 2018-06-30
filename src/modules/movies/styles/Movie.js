@@ -10,6 +10,17 @@ const styles = StyleSheet.create({
 	underlineStyle: {
 		backgroundColor: '#EA0000'
 	},
+	
+	circle: {
+		width: 5,
+		height: 5,
+		borderRadius: 50,
+		color: '#fff',
+		textAlign: 'center',
+		backgroundColor: '#000'
+	},
+
+
 	tabBar: {
 		backgroundColor: '#131313'
 	},
