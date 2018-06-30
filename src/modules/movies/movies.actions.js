@@ -32,7 +32,7 @@ export function retrievePopularBooksSuccess(res) {
 
 export function retrievePopularBooks(page) {
 	return function (dispatch) {
-		return axios.get(`https://kitappapi.herokuapp.com/popular/:`)
+		return axios.get(`https://kitappapi.herokuapp.com/popular/` + page)
 		.then(res => {
 			dispatch(retrievePopularBooksSuccess(res));
 		})

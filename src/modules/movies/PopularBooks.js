@@ -23,14 +23,14 @@ class PopularBooks extends Component {
 		this.state = {
 			isLoading: true,
 			isRefreshing: false,
-			currentPage: 1,
-			list: {
-				results: []
-			}
+			currentPage: 0,
+			list: [],
+			newData: []
 		};
 
 		this._viewMovie = this._viewMovie.bind(this);
 		this._onRefresh = this._onRefresh.bind(this);
+		this._retrieveNextPage = this._retrieveNextPage.bind(this);
 		this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
 	}
 
@@ -38,19 +38,57 @@ class PopularBooks extends Component {
 		this._retrieveMoviesList();
 	}
 
+	componentDidUpdate(prevProps) {
+		if (this.props.popularBooks.results !== prevProps.popularBooks.results) {
+			this.setState({
+				newData: this.props.popularBooks.results
+			})
+		}
+	}
+	
+
 	_retrieveMoviesList(isRefreshed) {
 		this.props.actions.retrievePopularBooks(this.state.currentPage)
 			.then(() => {
 				const ds = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 });
 				const dataSource = ds.cloneWithRows(this.props.popularBooks.results);
 				this.setState({
-					list: this.props.list,
+					list: this.props.popularBooks.results,
 					dataSource,
 					isLoading: false
 				});
 			});
 		if (isRefreshed && this.setState({ isRefreshing: false }));
 	}
+
+	_retrieveNextPage() {
+		this.setState({
+			currentPage: this.state.currentPage + 1
+		});
+
+		let page;
+		if (this.state.currentPage === 0) {
+			page = 1;
+			this.setState({ currentPage: 1 });
+		} else {
+			page = this.state.currentPage + 1;
+		}
+
+		axios.get(`https://kitappapi.herokuapp.com/popular/${page}`)
+			.then((res) => {
+				const data = this.props.popularBooks.results;
+				const newData = res.data.results;
+				
+				newData.map((item,index)=> data.push(item));
+				
+				this.setState({
+					dataSource: this.state.dataSource.cloneWithRows(this.state.list)
+				});
+			}).catch(err => {
+				console.log('next page', err); // eslint-disable-line
+		});
+	}
+	
 
 	_viewMovie(movieId) {
 		this.props.navigator.showModal({
@@ -89,6 +127,7 @@ class PopularBooks extends Component {
 			<ListView
 				style={styles.container}
 				enableEmptySections
+				onEndReached={this._retrieveNextPage}
 				dataSource={this.state.dataSource}
 				renderRow={rowData => <CardThree info={rowData} viewMovie={this._viewMovie} />}
 				renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.seperator} />}

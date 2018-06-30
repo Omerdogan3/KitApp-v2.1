@@ -20,6 +20,7 @@ class Drawer extends Component {
 		this._openSearch = this._openSearch.bind(this);
 	}
 
+
 	_openSearch() {
 		this._toggleDrawer();
 		this.props.navigator.showModal({
