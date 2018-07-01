@@ -50,6 +50,7 @@ class Movie extends Component {
 		this._onRefresh = this._onRefresh.bind(this);
 		this._viewMovie = this._viewMovie.bind(this);
 		this._onScroll = this._onScroll.bind(this);
+		this._onContentSizeChange = this._onContentSizeChange.bind(this);
 		this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
 	}
 
@@ -123,6 +124,12 @@ class Movie extends Component {
 	_getTabHeight(tabName, height) {
 		if(tabName === 'PRICE') this.setState({priceTabHeight: height})
 		if(tabName === 'AUTHOR') this.setState({authorTabHeight: height})
+	}
+
+	_onContentSizeChange(width, height) {
+		if (this.state.tab === 0 && this.state.infoTabHeight === this.state.castsTabHeight) {
+			this.setState({ infoTabHeight: height });
+		}
 	}
 
 

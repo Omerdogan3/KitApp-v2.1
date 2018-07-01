@@ -51,7 +51,7 @@ export function retrievePopularAuthorsSuccess(res){
 
 export function retrievePopularAuthors(page) {
 	return function (dispatch) {
-		return axios.get(`https://kitappapi.herokuapp.com/popularauthors/:`)
+		return axios.get(`https://kitappapi.herokuapp.com/popularauthors/` + page)
 		.then(res => {
 			dispatch(retrievePopularAuthorsSuccess(res));
 		})

@@ -23,7 +23,7 @@ class PopularAuthors extends Component {
 		this.state = {
 			isLoading: true,
 			isRefreshing: false,
-			currentPage: 1,
+			currentPage: 0,
 			list: {
 				results: []
 			}
@@ -31,6 +31,7 @@ class PopularAuthors extends Component {
 
 		this._viewMovie = this._viewMovie.bind(this);
 		this._onRefresh = this._onRefresh.bind(this);
+		this._retrieveNextPage = this._retrieveNextPage.bind(this);
 		this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
 	}
 
@@ -44,12 +45,40 @@ class PopularAuthors extends Component {
 				const ds = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 });
 				const dataSource = ds.cloneWithRows(this.props.popularAuthors.results);
 				this.setState({
-					list: this.props.list,
+					list: this.props.popularAuthors.results,
 					dataSource,
 					isLoading: false
 				});
 			});
 		if (isRefreshed && this.setState({ isRefreshing: false }));
+	}
+
+	_retrieveNextPage() {
+		this.setState({
+			currentPage: this.state.currentPage + 1
+		});
+
+		let page;
+		if (this.state.currentPage === 0) {
+			page = 1;
+			this.setState({ currentPage: 1 });
+		} else {
+			page = this.state.currentPage + 1;
+		}
+
+		axios.get(`https://kitappapi.herokuapp.com/popularauthors/${page}`)
+			.then((res) => {
+				const data = this.props.popularAuthors.results;
+				const newData = res.data.results;
+				
+				newData.map((item,index)=> data.push(item));
+				
+				this.setState({
+					dataSource: this.state.dataSource.cloneWithRows(this.state.list)
+				});
+			}).catch(err => {
+				console.log('next page', err); // eslint-disable-line
+		});
 	}
 
 	_viewMovie(movieId, title) {
@@ -91,6 +120,7 @@ class PopularAuthors extends Component {
 			<ListView
 				style={styles.container}
 				enableEmptySections
+				onEndReached={this._retrieveNextPage}
 				dataSource={this.state.dataSource}
 				renderRow={rowData => <CardAuthor info={rowData} viewMovie={this._viewMovie.bind(this, rowData.ISBN , rowData.author_name)} />}
 				renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.seperator} />}
