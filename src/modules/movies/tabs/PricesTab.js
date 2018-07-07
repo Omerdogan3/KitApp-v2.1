@@ -146,6 +146,35 @@ render(){
                     </View>
                   </View> 
                 }
+
+                {
+                  prices[0].kidega === "" || 0 ? null :
+                  <View style={styles.card}>
+                    <View style={styles.labelRow} >
+                      <Text style={styles.label}>Kidega: {prices[0].kidega}</Text>
+                        <TouchableOpacity activeOpacity={0.6} onPress={() =>
+                          <WebView
+                          source={{ uri: prices[1].kidegaLink}}
+                          style={{ marginTop: 0 }}
+                          scalesPageToFit
+                          javaScriptEnabled
+                          domStorageEnabled
+                          startInLoadingState
+                          mixedContentMode="always"
+                        
+                        />
+                        }>
+
+                          <View style={styles.viewButton}>
+                            <Text style={styles.viewButtonText}>Goruntule</Text>
+                          </View>
+                        </TouchableOpacity>
+                    </View>
+                  </View>
+                }
+
+
+
                 {
                   prices[0].drPrice === "" || 0 ? null : 
                   <View style={styles.card}>

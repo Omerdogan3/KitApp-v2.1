@@ -4,8 +4,7 @@
   "expo": {
 		"name": "movieapp",
 		"slug": "movie-app",
-		"sdkVersion": "UNVERSIONED",
-		"privacy": "public"
+		"sdkVersion": "23.0.0"
 	}
 }
 

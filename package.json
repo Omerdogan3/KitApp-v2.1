@@ -1,7 +1,7 @@
 {
   "name": "movieapp",
   "version": "2.2.1",
-  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "lint": "esw index.ios.js index.android.js src utils",
@@ -17,7 +17,7 @@
     "eslint-plugin-react": "^6.6.0",
     "eslint-plugin-react-native": "^2.0.0",
     "eslint-watch": "2.1.14",
-    "expo": "^28.0.0",
+    "expo": "23.0.0",
     "lodash": "^4.16.6",
     "moment": "^2.16.0",
     "numeral": "^1.5.3",
